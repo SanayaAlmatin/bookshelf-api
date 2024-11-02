@@ -1,9 +1,8 @@
 const {
     nanoid
-} = require('nanoid'); // Menghasilkan ID unik
-const books = []; // Array untuk menyimpan data buku
+} = require('nanoid'); 
+const books = []; 
 
-// Handler untuk menambahkan buku
 const addBookHandler = (request, h) => {
     const {
         name,
@@ -16,7 +15,6 @@ const addBookHandler = (request, h) => {
         reading,
     } = request.payload;
 
-    // Validasi input
     if (!name) {
         return h.response({
             status: 'fail',
@@ -31,7 +29,6 @@ const addBookHandler = (request, h) => {
         }).code(400);
     }
 
-    // Tambahkan properti tambahan
     const id = nanoid(16);
     const insertedAt = new Date().toISOString();
     const updatedAt = insertedAt;
@@ -72,7 +69,6 @@ const addBookHandler = (request, h) => {
     }).code(500);
 };
 
-// Handler untuk menampilkan semua buku
 const getAllBooksHandler = (request, h) => {
 
     const {
@@ -83,12 +79,12 @@ const getAllBooksHandler = (request, h) => {
     let filteredBooks = books;
 
     if (reading !== undefined) {
-        const isReading = reading === '1'; // '1' artinya true, '0' artinya false
+        const isReading = reading === '1'; 
         filteredBooks = books.filter((book) => book.reading === isReading);
     }
 
     if (finished !== undefined) {
-        const isFinished = finished === '1'; // '1' artinya true, '0' artinya false
+        const isFinished = finished === '1'; 
         filteredBooks = filteredBooks.filter((book) => book.finished === isFinished);
     }
 
@@ -147,7 +143,6 @@ const editBookByIdHandler = (request, h) => {
         reading,
     } = request.payload;
 
-    // Validasi input
     if (!name) {
         return h.response({
             status: 'fail',
@@ -206,7 +201,7 @@ const deleteBookByIdHandler = (request, h) => {
         }).code(404);
     }
 
-    books.splice(index, 1); // Hapus buku dari array
+    books.splice(index, 1); 
 
     return h.response({
         status: 'success',
